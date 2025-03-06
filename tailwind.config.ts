@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
 
 const config: Config = {
   darkMode: "class",
@@ -14,8 +14,13 @@ const config: Config = {
         ...colors,
         // primary: "#1A202C",
       },
+      fontFamily: {
+        akshar: ["var(--font-akshar)", "sans-serif"],
+        abril: ["var(--font-abril-fatface)", "serif"], 
+      },
     },
   },
   plugins: [require("tailgrids/plugin")],
 };
+
 export default config;

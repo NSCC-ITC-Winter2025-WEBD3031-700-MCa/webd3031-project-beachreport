@@ -75,3 +75,21 @@ body {
 .blog-details h3 {
   @apply text-dark mb-6 text-2xl font-bold dark:text-white sm:text-[28px] sm:leading-[40px];
 }
+
+.text-stroke-white {
+  color: white; /* Fill color */
+  text-shadow: 
+    1px 1px 0 black,  
+    -1px -1px 0 black,  
+    1px -1px 0 black,  
+    -1px 1px 0 black; /* Stroke-like effect */
+}
+
+.text-stroke-orange {
+  color: rgb(208, 113, 5); /* Fill color */
+  text-shadow: 
+    1px 1px 0 black,  
+    -1px -1px 0 black,  
+    1px -1px 0 black,  
+    -1px 1px 0 black; /* Stroke-like effect */
+}

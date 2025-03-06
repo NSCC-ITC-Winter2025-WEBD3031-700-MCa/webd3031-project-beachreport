@@ -10,6 +10,21 @@ import "../styles/prism-vsc-dark-plus.css";
 import ToasterContext from "./api/contex/ToasetContex";
 import { useEffect, useState } from "react";
 import PreLoader from "@/components/Common/PreLoader";
+import { Abril_Fatface } from "next/font/google";
+import { Akshar } from "next/font/google"
+
+// Import fonts
+const abrilFatface = Abril_Fatface({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-abril-fatface", 
+});
+
+const akshar = Akshar({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-akshar", 
+});
 
 export default function RootLayout({
   children,
@@ -23,13 +38,11 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html suppressHydrationWarning={true} className="!scroll-smooth" lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
-
+    <html
+      suppressHydrationWarning={true}
+      className={`!scroll-smooth ${abrilFatface.variable} ${akshar.variable}`} // Add font variables
+      lang="en"
+    >
       <body>
         {loading ? (
           <PreLoader />
