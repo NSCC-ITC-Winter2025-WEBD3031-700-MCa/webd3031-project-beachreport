@@ -21,7 +21,7 @@ const abrilFatface = Abril_Fatface({
 });
 
 const akshar = Akshar({
-  weight: "400",
+  weight: ["400", "700"],
   subsets: ["latin"],
   variable: "--font-akshar", 
 });
@@ -43,6 +43,12 @@ export default function RootLayout({
       className={`!scroll-smooth ${abrilFatface.variable} ${akshar.variable}`} // Add font variables
       lang="en"
     >
+       <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+      </head>
       <body>
         {loading ? (
           <PreLoader />
