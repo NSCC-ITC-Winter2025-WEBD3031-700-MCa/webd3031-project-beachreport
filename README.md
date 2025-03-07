@@ -1,93 +1,58 @@
-Play Next.js is a free and **Open-source SaaS starter kit and boilerplate, designed and built for SaaS startups**, apps, businesses, and more. With its premium design and essential UI components and pages, it provides everything you need to kickstart a feature-rich SaaS website.
+# Beach Report
+
+## Authors
+[Andrea Morshead](https://www.linkedin.com/in/andreamorshead/), [Kortney Foley](https://www.linkedin.com/in/kortney-foley/), [Miguel Vidito](https://www.linkedin.com/in/miguel-vidito-davis-aa88a1291/)
+
+**Purpose:**  
+Looking for the perfect beach day? 🏖️ Whether you’re hunting for hidden gems or just need to know where the nearest sandy spot is, The Beach Report has you covered!
+
+With our easy-to-use platform, you’ll always be in the know about the best beaches near you.
+
+## Features:  
+- Find your closest beaches – No more guessing, just good vibes and great views!
+- Get the scoop – Check ratings, read real reviews, and see what other beachgoers are saying.
+- Know before you go – Find out if there’s parking, flush toilets, or other must-have amenities.
+- Report & share – Spot an issue? Have a tip? Help make beach days better for everyone!
+
+## Tech Stack:  
+- **Next.js**: The framework powering the application.  
+- **Play Next.js Template**: Built using the Play Next.js SaaS starter kit, providing authentication, database integration, and more.  
+- **Prisma**: ORM used to interact with the database.  
+- **Neon Database**: Cloud-native PostgreSQL database for storing data.  
+- **pnpm**: Fast, disk space efficient package manager for Node.js.  
+
+## Live Demo:  
+[View the Live Site](https://webd3031-project-beachreport.vercel.app/)
+
+## Setup Instructions
+
+To set up and run the Beach Report project locally:
+
+1. Clone the repository or download the template.
+2. Navigate to the project directory:
+
+   ```bash
+   cd beach-report
+3. If pnpm is not installed you can installed it with 
+    npm install -g pnpm
+4. Verify the Installation
+    pnpm --version
+5. Install the dependencies using pnpm:
+    pnpm install
+6. Start the development server:
+    pnpm dev
 
 
-[![Play Next.js](https://github.com/NextJSTemplates/play-nextjs/blob/main/nextjs-play.png)](https://play.nextjstemplates.com)
+## Prisma Database instructions 
+1. Prisma is built into this template, you can set up your own database following the steps provided by NextJS documentation: https://nextjs.org/learn/dashboard-app/setting-up-your-database
+2. Replace the .env.example with the real variables from your new setup
+4. Set up the database and run Prisma migrations:
+    pnpx prisma migrate dev
+5. Run Prisma Studio to access the database GUI:
+    pnpx prisma studio
+6. Start the Development Server (if you haven't already):
+    pnpm dev
 
-## Free SaaS Boilerplate and Starter Kit for Next.js 🚀
-Play Next.js SaaS Boilerplate and Starter Kit is a free, open-source solution ideal for startups, SaaS companies, and more. It offers essential UI components, authentication and database integration, and Stripe integration. Its superior design and functionality make it a go-to choice for launching a feature-rich SaaS website efficiently.
 
-### [🚀 View Live Demo](https://play.nextjstemplates.com/)
-
-### [🔌 Documentation](https://nextjstemplates.com/docs)
-
-### All Essential Integrations - DB, Auth, Payment, MDX, and more ⚡
-Play Next.js SaaS Starter kit includes all the key integrations required to build a fully functional SaaS platform.
-
-- **PostgreSQL for Database**: Comes with PostgreSQL integration with Prisma which is a powerful and open-source relational database system ensures data integrity and reliability.
-
-- **NextAuth for Authentication**: Play Next.js utilizes NextAuth, a versatile solution that provides secure login and user management.
-
-- **MDX for Blogs**: MDX uniquely combines Markdown and JSX, Play Next.js comes with complete blogging solution to create and maintain blog using MDX.
-
-- **Stripe for Subscription Payments**: Stripe, a globally trusted payment processing platform, offers robust security features and smooth checkout experiences.
-
-These integrations work together to simplify development and enhance the user experience.
-
-### Essential SaaS Pages & Components and Styled Using Tailwind CSS 🎨
-This Next.js SaaS Boilerplate and Starter Kit is **styled using Tailwind CSS**, a highly flexible and customizable utility-first CSS framework. Leveraging the power of Tailwind, each component and page of this kit, including **login, signup, blog, about, and others, has been handcrafted to offer top-notch aesthetics** while maintaining peak usability. 
-
-### Crafted Using [🎨 TailGrids Components](https://tailgrids.com)
-
-Play Next.js SaaS boilerplate, you can enjoy a professional-looking website that offers seamless operation, all while significantly reducing your web development time and effort.
-___
-
-### 🚀 Deploy Now
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FNextJSTemplates%2Fplay-nextjs)
-
-[![Deploy with Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/NextJSTemplates/play-nextjs)
-
-### Setup Instructions
-
-Follow these steps to set up and run this template on your local machine:
-
-1. Begin by downloading and extracting the template from **Next.js Templates**.
-
-2. Once you've done that, navigate into the template directory using the **cd** command.
-
-3. Install the necessary dependencies by running the following commands:
-
-```bash
-    npm install --legacy-peer-deps
-```
-**Note:** As of right now React 19 causes peer dependencies issues with some packages, so the `legacy-peer-deps` flag is required.
-
-4. Now you're ready to start the project on your local server. Use the following command to get it up and running:
-
-```bash
-    npm run dev
- ```
-
-This will launch the template on [localhost:3000](http://localhost:3000).
-
-Our comprehensive documentation includes all the guides you'll need for integrating various features.
-
-### Deployment on PaaS
-
-If your project is hosted on a GitHub repository, you can deploy it using free and user-friendly platforms like [Vercel](https://vercel.com/) or [Netlify](https://netlify.com/). Both provide generous free tiers for hosting Next.js projects.
-
-### License Information
-Play is Free is completely free and open-source. Feel free to use it for both personal and commercial projects.
-
-### Show Your Support
-If you appreciate this project, please consider starring this repository. Your support encourages our team to continue creating more content like this and helps us to reach more users like you!
-
-## Explore More Templates
-For a wider range of options, feel free to browse our collection of [Next.js Templates, Boilerplates and Starter Kits](https://nextjstemplates.com/templates).
-
-### Update Log
-**29 Jan 2025**
-- Upgraded to Next.js 15
-- Using `Link` instead of `a` tag
-- Fixed all minor bugs
-
-  
-**21 March 2024**
-- Upgraded to Next.js 14
-- Updated stripe integration
-- Fixed auth issues
-- Updated all the packages
-- Update ts config & fix all the issues
-- Update signin & signup page Design
-- Integrated Magic link signin
-- & Forgot password
+## Copyright 
+© 2025 Beach Report. All rights reserved.
