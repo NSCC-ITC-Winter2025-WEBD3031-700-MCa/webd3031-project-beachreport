@@ -2,6 +2,9 @@ import { prisma } from "@/utils/prismaDB";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { sendEmail } from "@/utils/email";
+import { Prisma } from "@prisma/client";
+
+type UserType = Prisma.UserGetPayload<{}>;
 
 export async function POST(request: Request) {
 	const body = await request.json();
@@ -29,12 +32,10 @@ export async function POST(request: Request) {
 	passwordResetTokenExp.setMinutes(passwordResetTokenExp.getMinutes() + 10);
 
 	await prisma.user.update({
-		where: {
-			email: formatedEmail,
-		},
+		where: { email },
 		data: {
 			passwordResetToken: resetToken,
-			passwordResetTokenExp,
+			passwordResetTokenExp: passwordResetTokenExp, // Ensure correct naming
 		},
 	});
 
