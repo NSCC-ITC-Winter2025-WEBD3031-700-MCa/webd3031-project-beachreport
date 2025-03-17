@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 				password: hashedPassword,
 				passwordResetToken: null,
 				passwordResetTokenExp: null,
-			},
+			} as any, // Temporary cast – TODO fix this in the future, testing for deployment bug fix
 		});
 
 		return NextResponse.json("Password Updated", { status: 200 });

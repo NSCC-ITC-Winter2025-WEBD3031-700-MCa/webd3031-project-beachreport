@@ -15,7 +15,7 @@ export const POST = async (request: Request) => {
       passwordResetTokenExp: {
         gte: new Date(),
       },
-    },
+    } as any,
   });
 
   if (!user) {
