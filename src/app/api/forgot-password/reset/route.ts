@@ -32,13 +32,13 @@ export async function POST(request: Request) {
 	passwordResetTokenExp.setMinutes(passwordResetTokenExp.getMinutes() + 10);
 
 	await prisma.user.update({
-		where: { email },
+		where: { email: formatedEmail },
 		data: {
 			passwordResetToken: resetToken,
-			passwordResetTokenExp: passwordResetTokenExp, // Ensure correct naming
-		},
+			passwordResetTokenExp: passwordResetTokenExp,
+		} as any, // Temporary cast – TODO fix this in the future, testing for deployment bug fix
 	});
-
+	
 	const resetURL = `${process.env.SITE_URL}/reset-password/${resetToken}`;
 
 	try {
