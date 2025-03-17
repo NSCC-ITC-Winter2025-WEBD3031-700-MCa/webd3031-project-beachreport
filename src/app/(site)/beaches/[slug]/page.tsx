@@ -22,7 +22,7 @@ export default async function BeachPage({ params }: BeachPageProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto my-20 p-6">
+    <div className="bg-gray-200 max-w-4xl mx-auto my-20 p-6">
       <Image
         src={beach.imageUrl!}
         alt={beach.name}
