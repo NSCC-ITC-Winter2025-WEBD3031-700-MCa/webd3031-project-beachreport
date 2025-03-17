@@ -28,7 +28,7 @@ async function main() {
       name: "Lawrencetown Beach",
       location: "Lawrencetown, NS",
       description: "A popular surfing destination with stunning ocean views.",
-      imageUrl: "https://example.com/lawrencetown.jpg",
+      imageUrl: "https://coastalnovascotia.ca/wp-content/uploads/2019/06/Lawrencetown-beach.jpg",
     },
   });
 
@@ -38,7 +38,7 @@ async function main() {
       name: "Carter's Beach",
       location: "Port Mouton, NS",
       description: "White sand and turquoise waters, often compared to the Caribbean.",
-      imageUrl: "https://example.com/carters.jpg",
+      imageUrl: "https://novascotia.com/wp-content/uploads/2024/09/38103.webp",
     },
   });
 
@@ -48,7 +48,7 @@ async function main() {
       name: "Ingonish Beach",
       location: "Cape Breton, NS",
       description: "A mix of saltwater and freshwater swimming options with scenic views.",
-      imageUrl: "https://example.com/ingonish.jpg",
+      imageUrl: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/b4/96/46/img-20190804-124051-522.jpg?w=900&h=500&s=1",
     },
   });
 
