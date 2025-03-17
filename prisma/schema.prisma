@@ -16,7 +16,7 @@ model User {
   name     String?
   email    String? @unique
   password String
-  passwordResetToken   String? // Optional token for password reset
+  passwordResetToken   String? @unique // Optional token for password reset
   passwordResetTokenExp DateTime? // Expiry time for reset token
   
 }
