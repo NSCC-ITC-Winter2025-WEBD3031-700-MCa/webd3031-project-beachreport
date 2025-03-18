@@ -21,19 +21,13 @@ const menuData: Menu[] = [
   },
   {
     id: 5,
-    title: "Contact",
+    title: "Beach Map",
     path: "/contact",
     newTab: false,
   },
   {
-    id: 5,
-    title: "Blog",
-    path: "/blogs",
-    newTab: false,
-  },
-  {
     id: 6,
-    title: "Pages",
+    title: "Beaches",
     newTab: false,
     submenu: [
       {
