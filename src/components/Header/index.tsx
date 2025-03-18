@@ -9,9 +9,27 @@ import { useEffect, useState } from "react";
 import menuData from "./menuData";
 
 const Header = () => {
+  const [beaches, setBeaches] = useState([]);
   const { data: session } = useSession();
-
   const pathUrl = usePathname();
+
+   // Fetch beaches from API
+   useEffect(() => {
+    const fetchBeaches = async () => {
+      try {
+        const response = await fetch("/api/beaches");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
+        setBeaches(data || []);
+      } catch (error) {
+        console.error("Error fetching beaches:", error);
+      }
+    };
+
+    fetchBeaches();
+  }, []);
+
+ 
   // Navbar toggle for mobile view
   const [navbarOpen, setNavbarOpen] = useState(false);
   const navbarToggleHandler = () => {
@@ -232,19 +250,24 @@ const Header = () => {
                               openIndex === index ? "!-left-[25px]" : "hidden"
                             }`}
                           >
-                            {menuItem?.submenu?.map((submenuItem: any, i) => (
-                              <Link
-                                href={submenuItem.path}
-                                key={i}
-                                className={`block rounded px-4 py-[10px] text-sm ${
-                                  pathUrl === submenuItem.path
-                                    ? "text-cyan-500"
-                                    : "text-body-color hover:text-cyan-500 dark:text-dark-6 dark:hover:text-cyan-500"
-                                }`}
-                              >
-                                {submenuItem.title}
-                              </Link>
-                            ))}
+                            {/* drop down menu */}
+                            {beaches.length > 0 ? (
+                              beaches.map((beach: any, i: number) => (
+                                <Link
+                                  href={`/beaches/${beach.slug}`}
+                                  key={i}
+                                  className={`block rounded px-4 py-[10px] text-sm ${
+                                    pathUrl === `/beaches/${beach.slug}`
+                                      ? "text-cyan-500"
+                                      : "text-body-color hover:text-cyan-500 dark:text-dark-6 dark:hover:text-cyan-500"
+                                  }`}
+                                >
+                                  {beach.name}
+                                </Link>
+                              ))
+                            ) : (
+                              <p className="px-4 py-2 text-sm text-gray-500">No beaches found.</p>
+                            )}
                           </div>
                         </li>
                       ),
