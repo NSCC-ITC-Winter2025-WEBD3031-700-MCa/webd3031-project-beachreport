@@ -1,10 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider          = "postgresql"
   url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/d/migrate-shadow
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -12,13 +9,27 @@ generator client {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String?
-  email    String? @unique
-  password String
-  passwordResetToken   String? @unique // Optional token for password reset
-  passwordResetTokenExp DateTime? // Expiry time for reset token
-  
+  id                String   @id @default(cuid())
+  name              String?
+  email             String   @unique
+  password          String?  // Nullable for Google accounts
+  isAdmin           Boolean  @default(false)  // Admin status
+  isPaidSubscriber  Boolean  @default(false)  // Subscription status
+  passwordResetToken   String? @unique
+  passwordResetTokenExp DateTime?
+  image             String?  // Google profile picture
+  emailVerified     DateTime? // Google email verification status
+ 
+  accounts          Account[] // Link Google accounts to users
+  reports           Report[] // One-to-Many relationship with reports
+}
+ 
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider          String   // "google", "github", etc.
+  providerAccountId String   @unique // Google account ID
 }
 
 model Beach {
@@ -34,8 +45,9 @@ model Beach {
 model Report {
   id          String   @id @default(cuid()) 
   beachId     String   // Foreign key
+  userId      String   // Foreign key
   beach       Beach    @relation(fields: [beachId], references: [id], onDelete: Cascade)
-  user        String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
   reportText  String
   rating      Int      @default(3) 
   createdAt   DateTime @default(now())

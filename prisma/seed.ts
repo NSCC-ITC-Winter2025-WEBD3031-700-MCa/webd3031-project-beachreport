@@ -1,23 +1,39 @@
 import { PrismaClient } from '@prisma/client';
 
-
 const prisma = new PrismaClient();
 
 async function main() {
   // Create Users
+
+  // User 1: Paid Subscriber
   const user1 = await prisma.user.create({
     data: {
       name: "John Doe",
       email: "johndoe@example.com",
-      password: "hashedpassword123", // Replace with hashed password
+      password: "hashedpassword123", // Replace with your hashed password
+      isPaidSubscriber: true,
+      // isAdmin defaults to false
     },
   });
 
+  // User 2: Regular User (non-admin)
   const user2 = await prisma.user.create({
     data: {
       name: "Jane Smith",
       email: "janesmith@example.com",
       password: "hashedpassword456",
+      // isAdmin and isPaidSubscriber default to false
+    },
+  });
+
+  // User 3: Admin
+  const user3 = await prisma.user.create({
+    data: {
+      name: "Alice Johnson",
+      email: "alicejohnson@example.com",
+      password: "hashedpassword789",
+      isAdmin: true,
+      // isPaidSubscriber defaults to false (or set true if desired)
     },
   });
 
@@ -57,21 +73,27 @@ async function main() {
     data: [
       {
         beachId: beach1.id,
-        user: user1.name!,
+        userId: user1.id, // Report by John Doe (paid subscriber)
         reportText: "Great waves today! Perfect for surfing.",
         rating: 5,
       },
       {
         beachId: beach2.id,
-        user: user2.name!,
+        userId: user2.id, // Report by Jane Smith (regular user)
         reportText: "The water was crystal clear and warm.",
         rating: 4,
       },
       {
         beachId: beach3.id,
-        user: user1.name!,
+        userId: user1.id, // Another report by John Doe (paid subscriber)
         reportText: "Beautiful views but the water was a bit cold.",
         rating: 3,
+      },
+      {
+        beachId: beach1.id,
+        userId: user3.id, // Report by Alice Johnson (admin)
+        reportText: "I checked the facilities, and everything looks great!",
+        rating: 5,
       },
     ],
   });
@@ -87,3 +109,5 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+
