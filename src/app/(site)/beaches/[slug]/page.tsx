@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
-// Update the type so that params is a Promise of an object containing slug.
 interface BeachPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -40,7 +40,7 @@ export default async function BeachPage({ params }: BeachPageProps) {
         className="w-full h-96 object-cover rounded-lg"
       />
 
-      <h1 className="text-4xl font-bold text-blue-600 mt-6">{beach.name}</h1>
+      <h1 className="text-4xl font-bold text-cyan-500 mt-6">{beach.name}</h1>
       <p className="text-lg text-gray-600 mt-2">{beach.location}</p>
       <p className="mt-4 text-gray-700 leading-relaxed">{beach.description}</p>
 
@@ -48,13 +48,29 @@ export default async function BeachPage({ params }: BeachPageProps) {
         <h2 className="text-2xl font-semibold mb-4">User Reports</h2>
         {beach.reports.map((report) => (
           <div key={report.id} className="bg-gray-100 p-4 rounded-md mb-4">
-            <p className="font-semibold text-gray-800">
-              {report.user?.name || "Anonymous"}
-            </p>
+            {/* Username & Timestamp (Same Line) */}
+            <div className="flex justify-between items-center">
+              <p className="font-semibold text-gray-800">
+                {report.user?.name || "Anonymous"}
+              </p>
+              <p className="text-gray-500 text-sm">
+                {new Date(report.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+
             <p className="text-gray-600 mt-1">{report.reportText}</p>
-            <p className="text-yellow-500 mt-2">Rating: {report.rating}/5</p>
+            <p className="text-amber-700 mt-2">Rating: {report.rating}/5</p>
           </div>
         ))}
+      </div>
+
+      {/* Submit Report Button */}
+      <div className="mt-8">
+        <Link href={`/beaches/${beach.slug}/report`}>
+          <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600">
+            Submit a Report
+          </button>
+        </Link>
       </div>
     </div>
   );
