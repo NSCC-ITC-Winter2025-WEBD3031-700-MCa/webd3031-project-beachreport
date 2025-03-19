@@ -1,0 +1,44 @@
+# name: CI Tests
+
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#   pull_request:
+#     branches:
+#       - main
+#       - develop
+
+# jobs:
+#   test:
+#     name: Run Prisma Checks & Jest Tests
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           cache: 'pnpm'
+
+#       - name: Install Dependencies
+#         run: pnpm install
+
+#       # Run Prisma Checks
+#       - name: Run Prisma Schema Validation
+#         run: pnpm prisma validate
+
+#       - name: Check Prisma Migrations
+#         run: pnpm prisma migrate status
+
+#       # Set up test database (SQLite for local tests)
+#       - name: Set TEST_DATABASE_URL for Jest
+#         run: echo "DATABASE_URL=file:./test.db" >> $GITHUB_ENV
+
+#       #  Run Jest Tests
+#       - name: Run Jest Tests
+#         run: pnpm test
