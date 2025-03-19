@@ -1,21 +1,30 @@
-import { PrismaClient, Beach } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import Image from 'next/image';
 
 const prisma = new PrismaClient();
 
+// Update the type so that params is a Promise of an object containing slug.
 interface BeachPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 async function getBeachBySlug(slug: string) {
   return await prisma.beach.findUnique({
     where: { slug },
-    include: { reports: true },
+    include: {
+      reports: {
+        include: {
+          user: true,
+        },
+      },
+    },
   });
 }
 
 export default async function BeachPage({ params }: BeachPageProps) {
-  const beach = await getBeachBySlug(params.slug);
+  // Await the params before using them.
+  const { slug } = await params;
+  const beach = await getBeachBySlug(slug);
 
   if (!beach) {
     return <p className="text-center text-red-500">Beach not found.</p>;
@@ -39,7 +48,9 @@ export default async function BeachPage({ params }: BeachPageProps) {
         <h2 className="text-2xl font-semibold mb-4">User Reports</h2>
         {beach.reports.map((report) => (
           <div key={report.id} className="bg-gray-100 p-4 rounded-md mb-4">
-            <p className="font-semibold text-gray-800">{report.user}</p>
+            <p className="font-semibold text-gray-800">
+              {report.user?.name || "Anonymous"}
+            </p>
             <p className="text-gray-600 mt-1">{report.reportText}</p>
             <p className="text-yellow-500 mt-2">Rating: {report.rating}/5</p>
           </div>
@@ -48,4 +59,5 @@ export default async function BeachPage({ params }: BeachPageProps) {
     </div>
   );
 }
+
 

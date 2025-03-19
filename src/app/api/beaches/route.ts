@@ -11,7 +11,7 @@ export async function GET() {
         slug: true,
         name: true,
         id: true,
-        location: true
+        location: true,
         // Include any other fields you need
       },
     });
