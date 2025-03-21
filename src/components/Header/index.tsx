@@ -315,14 +315,14 @@ const Header = () => {
                     {pathUrl !== "/" || sticky ? (
                       <button
                         onClick={() => signOut()}
-                        className="signUpBtn rounded-lg bg-cyan-500 bg-opacity-100 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-20 hover:text-dark"
+                        className="signUpBtn rounded-lg bg-cyan-500 bg-opacity-100 px-6 py-3 text-base font-medium text-amber-700 duration-300 ease-in-out hover:bg-opacity-20 hover:text-amber-700"
                       >
                         Sign Out
                       </button>
                     ) : (
                       <button
                         onClick={() => signOut()}
-                        className="signUpBtn rounded-lg bg-white bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                        className="signUpBtn rounded-lg bg-white bg-opacity-20 px-6 py-3 text-base font-medium text-amber-700 duration-300 ease-in-out hover:bg-opacity-100 hover:text-amber-700"
                       >
                         Sign Out
                       </button>
