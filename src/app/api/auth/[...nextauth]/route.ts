@@ -1,13 +1,35 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions, Session, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import { JWT } from "next-auth/jwt";
 
+// Prisma client
 const prisma = new PrismaClient();
 
-export const authOptions = {
+// Extend NextAuth types (make sure this is at the top of the file!!)
+declare module "next-auth" {
+  interface User {
+    id: string;
+    email: string;
+    isAdmin: boolean;
+  }
+
+  interface Session {
+    user: User;
+  }
+
+  interface JWT {
+    id: string;
+    email: string;
+    isAdmin: boolean;
+  }
+}
+
+// Define authentication options
+export const authOptions: NextAuthOptions = {
   session: {
-    strategy: "jwt" as const,
+    strategy: "jwt",
   },
   providers: [
     CredentialsProvider({
@@ -36,27 +58,38 @@ export const authOptions = {
           throw new Error("Invalid password");
         }
 
-        return { id: user.id, email: user.email };
+        
+        return {
+          id: user.id,
+          email: user.email,
+          isAdmin: user.isAdmin, 
+        };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: Record<string, unknown>; user?: { id: string } }) {
+    async jwt({ token, user }: { token: JWT; user?: NextAuthUser }) {
       if (user) {
-        token.id = user.id;
+        return { ...token, id: user.id, email: user.email, isAdmin: user.isAdmin };
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: Record<string, unknown> }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-      }
-      return session;
+
+    async session({ session, token }: { session: Session; token: JWT }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          email: token.email,
+          isAdmin: token.isAdmin,
+        },
+      };
     },
-},
-  pages: {
   },
+  pages: {},
 };
 
+// Export API route handler
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

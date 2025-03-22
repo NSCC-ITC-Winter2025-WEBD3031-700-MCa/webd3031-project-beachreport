@@ -1,9 +1,21 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
+import { JWT } from "next-auth/jwt";
+import { PrismaClient, User as PrismaUser } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+interface ExtendedUser extends PrismaUser {
+  isAdmin: boolean;
+}
+
+// Extend JWT type
+interface ExtendedJWT extends JWT {
+  id: string;
+  email: string;
+  isAdmin: boolean;
+}
 
 export const authOptions: AuthOptions = {
   session: {
@@ -36,15 +48,20 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        return { id: user.id, email: user.email };
+        console.log("User being returned:", { id: user.id, email: user.email, isAdmin: user.isAdmin });
+
+        return { id: user.id, email: user.email, isAdmin: user.isAdmin };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        const extendedUser = user as ExtendedUser;
+        token.id = extendedUser.id;
+        token.email = extendedUser.email;
+        token.isAdmin = extendedUser.isAdmin;
+        console.log("JWT token after login:", token);
       }
       return token;
     },
@@ -52,6 +69,8 @@ export const authOptions: AuthOptions = {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
+        session.user.isAdmin = token.isAdmin as boolean;
+        console.log("Session object:", session);
       }
       return session;
     },
