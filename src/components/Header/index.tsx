@@ -13,6 +13,11 @@ const Header = () => {
   const { data: session } = useSession();
   const pathUrl = usePathname();
 
+   // Log the session data
+   useEffect(() => {
+    console.log("Session data:", session);
+  }, [session]);
+
    // Fetch beaches from API
    useEffect(() => {
     const fetchBeaches = async () => {
@@ -63,6 +68,7 @@ const Header = () => {
   const { theme, setTheme } = useTheme();
 
   return (
+    
     <>
       <header
         className={`ud-header left-0 top-0 z-40 flex w-full items-center ${
@@ -303,6 +309,22 @@ const Header = () => {
                   </span>
                 </button> */}
 
+                 {/* Only show if user is logged in and is an admin */}
+                 <p className="group relative">
+                      {session?.user?.isAdmin && (
+                        <Link
+                          onClick={navbarToggleHandler}
+                          scroll={false}
+                          href="/admin"
+                          className={`ud-menu-scroll text-decoration-none flex py-2 text-amber-700 group-hover:text-amber-700 dark:text-amber-700 dark:group-hover:text-amber-700 lg:inline-flex lg:px-0 lg:py-6 ${
+                            pathUrl === "/#" && "text-cyan-500"
+                          }`}
+                        >
+                          Dashboard
+                        </Link>
+                      )}
+                    </p>
+                
                 {session?.user ? (
                   <>
                     <p
