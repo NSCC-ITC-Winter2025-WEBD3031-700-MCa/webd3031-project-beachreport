@@ -1,9 +1,14 @@
 import axios from "axios";
 import React from "react";
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import OfferList from "./OfferList";
 
 const PricingBox = ({ plan }: { plan: "Monthly" | "Yearly" }) => {
-  // Select correct Stripe Price ID
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  // Select correct Stripe Price ID using NEXT_PUBLIC environment variables
   const priceId =
     plan === "Yearly"
       ? process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID
@@ -12,15 +17,28 @@ const PricingBox = ({ plan }: { plan: "Monthly" | "Yearly" }) => {
   // Subscription handler
   const handleSubscription = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
+
+    if (!session) {
+      // Redirect to sign-in page if user is not signed in
+      router.push("/signin");
+      return;
+    }
+
     if (!priceId) {
       console.error("Stripe Price ID is missing!");
       return;
     }
 
-    const { data } = await axios.post("/api/payment", { priceId });
-
-    window.location.assign(data); // Redirect to Stripe Checkout
+    try {
+      // Pass both priceId and userId to your payment API
+      const { data } = await axios.post("/api/payment", { 
+        priceId,
+        userId: session.user.id,
+      });
+      window.location.assign(data); // Redirect to Stripe Checkout
+    } catch (error) {
+      console.error("Subscription error:", error);
+    }
   };
 
   return (
@@ -34,11 +52,11 @@ const PricingBox = ({ plan }: { plan: "Monthly" | "Yearly" }) => {
             Best Value
           </p>
         )}
-        
+
         <span className="mb-5 block text-xl font-medium text-dark dark:text-white">
           {plan} Subscription
         </span>
-        
+
         <h2 className="mb-11 text-4xl font-semibold text-dark dark:text-white xl:text-[42px] xl:leading-[1.21]">
           <span className="text-xl font-medium">$ </span>
           <span className="-ml-1 -tracking-[2px]">
@@ -63,7 +81,7 @@ const PricingBox = ({ plan }: { plan: "Monthly" | "Yearly" }) => {
         <div className="w-full">
           <button
             onClick={handleSubscription}
-            className="inline-block rounded-md bg-cyan-500 px-7 py-3 text-center text-base font-medium text-white transition duration-300 hover:bg-cyan-500/90"
+            className="inline-block rounded-md bg-cyan-500 px-7 py-2 text-center text-base font-medium text-white transition duration-300 hover:bg-cyan-500/90"
           >
             Subscribe Now
           </button>
@@ -74,4 +92,5 @@ const PricingBox = ({ plan }: { plan: "Monthly" | "Yearly" }) => {
 };
 
 export default PricingBox;
+
 
