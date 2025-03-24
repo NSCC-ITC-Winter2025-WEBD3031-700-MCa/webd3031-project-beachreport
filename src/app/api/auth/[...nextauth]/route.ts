@@ -4,10 +4,10 @@ import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 import { JWT } from "next-auth/jwt";
 
-// Prisma client
+// Initialize Prisma Client
 const prisma = new PrismaClient();
 
-// Extend NextAuth types (make sure this is at the top of the file!!)
+// Extend NextAuth types (ensure this is at the top)
 declare module "next-auth" {
   interface User {
     id: string;
@@ -26,8 +26,8 @@ declare module "next-auth" {
   }
 }
 
-// Define authentication options
-export const authOptions: NextAuthOptions = {
+// Define authentication options inline (do not export this)
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -43,7 +43,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing email or password");
         }
 
-        // Find user by email
+        // Find the user by email using Prisma
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
@@ -52,17 +52,17 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid email or password");
         }
 
-        // Check password
+        // Check password validity using bcrypt
         const isValidPassword = await bcrypt.compare(credentials.password, user.password);
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
 
-        
+        // Return user object without sensitive data
         return {
           id: user.id,
           email: user.email,
-          isAdmin: user.isAdmin, 
+          isAdmin: user.isAdmin,
         };
       },
     }),
@@ -90,6 +90,6 @@ export const authOptions: NextAuthOptions = {
   pages: {},
 };
 
-// Export API route handler
+// Create the NextAuth handler and export only GET and POST
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
