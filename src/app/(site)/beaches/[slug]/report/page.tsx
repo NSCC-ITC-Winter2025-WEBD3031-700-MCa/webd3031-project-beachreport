@@ -2,23 +2,44 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface ReportFormProps {
-  params: Promise<{ slug: string }>; // Ensure params is a Promise
+  params: Promise<{ slug: string }>;
 }
 
 export default function ReportForm({ params }: ReportFormProps) {
   const router = useRouter();
-  const [slug, setSlug] = useState<string | null>(null); // Store the resolved slug
+  const { data: session, status } = useSession(); // Get session info
+  const [slug, setSlug] = useState<string | null>(null);
   const [reportText, setReportText] = useState("");
   const [rating, setRating] = useState(3);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isPaidSubscriber, setIsPaidSubscriber] = useState<boolean | null>(null);
 
-  // Resolve params.slug when the component mounts
   useEffect(() => {
     params.then((resolvedParams) => setSlug(resolvedParams.slug));
   }, [params]);
+
+  // Fetch user subscription status
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.email) {
+      fetch(`/api/user-subscription`)
+        .then((res) => res.json())
+        .then((data) => {
+          setIsPaidSubscriber(data.isPaidSubscriber);
+          if (!data.isPaidSubscriber) {
+            router.replace("/"); // Redirect if not a paid subscriber
+          }
+        })
+        .catch(() => {
+          setError("Failed to check subscription status.");
+        });
+    } else if (status === "unauthenticated") {
+      router.replace("/signin"); // Redirect to login if not signed in
+    }
+  }, [status, session, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,22 +50,22 @@ export default function ReportForm({ params }: ReportFormProps) {
       const res = await fetch(`/api/reports`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          slug,
-          reportText,
-          rating,
-        }),
+        body: JSON.stringify({ slug, reportText, rating }),
       });
 
       if (!res.ok) throw new Error("Failed to submit report");
 
-      router.push(`/beaches/${slug}`); // Redirect after submit
+      router.push(`/beaches/${slug}`);
     } catch (err) {
       setError("Error submitting report. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (isPaidSubscriber === null) {
+    return <p className="text-center text-gray-600 my-20">Checking subscription status...</p>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg my-36">
@@ -93,3 +114,4 @@ export default function ReportForm({ params }: ReportFormProps) {
     </div>
   );
 }
+
