@@ -13,6 +13,7 @@ declare module "next-auth" {
     id: string;
     email: string;
     isAdmin: boolean;
+    isPaidSubscriber: boolean;
   }
 
   interface Session {
@@ -23,11 +24,12 @@ declare module "next-auth" {
     id: string;
     email: string;
     isAdmin: boolean;
+    isPaidSubscriber: boolean;
   }
 }
 
 // Define authentication options inline (do not export this)
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -63,6 +65,7 @@ const authOptions: NextAuthOptions = {
           id: user.id,
           email: user.email,
           isAdmin: user.isAdmin,
+          isPaidSubscriber: user.isPaidSubscriber
         };
       },
     }),
@@ -70,7 +73,7 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }: { token: JWT; user?: NextAuthUser }) {
       if (user) {
-        return { ...token, id: user.id, email: user.email, isAdmin: user.isAdmin };
+        return { ...token, id: user.id, email: user.email, isAdmin: user.isAdmin, isPaidSubscriber: user.isPaidSubscriber };
       }
       return token;
     },
@@ -83,6 +86,7 @@ const authOptions: NextAuthOptions = {
           id: token.id,
           email: token.email,
           isAdmin: token.isAdmin,
+          isPaidSubscriber: token.isPaidSubscriber,
         },
       };
     },

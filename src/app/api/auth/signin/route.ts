@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 
 interface ExtendedUser extends PrismaUser {
   isAdmin: boolean;
+  isPaidSubscriber: boolean;
 }
 
 // Extend JWT type
@@ -48,9 +49,9 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        console.log("User being returned:", { id: user.id, email: user.email, isAdmin: user.isAdmin });
+        console.log("User being returned:", { id: user.id, email: user.email, isAdmin: user.isAdmin, isPaidSubscriber: user.isPaidSubscriber});
 
-        return { id: user.id, email: user.email, isAdmin: user.isAdmin };
+        return { id: user.id, email: user.email, isAdmin: user.isAdmin, isPaidSubscriber: user.isPaidSubscriber };
       },
     }),
   ],
@@ -61,6 +62,7 @@ export const authOptions: AuthOptions = {
         token.id = extendedUser.id;
         token.email = extendedUser.email;
         token.isAdmin = extendedUser.isAdmin;
+        token.isPaidSubscriber = extendedUser.isPaidSubscriber;
         console.log("JWT token after login:", token);
       }
       return token;
@@ -70,6 +72,7 @@ export const authOptions: AuthOptions = {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
         session.user.isAdmin = token.isAdmin as boolean;
+        session.user.isPaidSubscriber = token.isPaidSubscriber as boolean;
         console.log("Session object:", session);
       }
       return session;
