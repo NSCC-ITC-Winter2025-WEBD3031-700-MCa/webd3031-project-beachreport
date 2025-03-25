@@ -30,7 +30,7 @@ export default function ReportForm({ params }: ReportFormProps) {
         .then((data) => {
           setIsPaidSubscriber(data.isPaidSubscriber);
           if (!data.isPaidSubscriber) {
-            router.replace("/"); // Redirect if not a paid subscriber
+            router.replace("/pricing"); // Redirect if not a paid subscriber
           }
         })
         .catch(() => {
