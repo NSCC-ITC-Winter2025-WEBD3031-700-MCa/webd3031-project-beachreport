@@ -15,8 +15,8 @@ import { getAllPosts } from "@/utils/markdown";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Play Next.js - SaaS Starter Kit and Boilerplate for Next.js",
-  description: "Free Next.js SaaS Boilerplate and Starter Kit designed and built for SaaS startups. It comes with all necessary integrations, pages, and components you need to launch a feature-rich SaaS websites.",
+  title: "Shorecast - Nova Scotia's Beach Reporting Website",
+  description: "With over 7,500 km of coastline, Nova Scotia ensures you're never more than 56 km from the ocean. At Shorecast, we provide all the details you need to find the perfect beach for your adventure.",
 };
 
 export default function Home() {

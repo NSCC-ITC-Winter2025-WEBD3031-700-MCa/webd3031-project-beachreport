@@ -2,10 +2,10 @@ export default function Head() {
   return (
     <>
       <title>
-      Play Next.js - SaaS Starter Kit and Boilerplate for Next.js
+      Shorecast - Nova Scotia&apos;s Beach Reporting Website
       </title>
       <meta content="width=device-width, initial-scale=1" name="viewport" />
-      <meta name="description" content="This SaaS Boilerplate and Starter Kit for Next.js is designed specifically for SaaS startups. It's a free resource complete with all the necessary integrations, pages, and components you require to build and launch a comprehensive SaaS website with robust features." />
+      <meta name="description" content="With over 7,500 km of coastline, Nova Scotia ensures you're never more than 56 km from the ocean. At Shorecast, we provide all the details you need to find the perfect beach for your adventure." />
       <link rel="icon" href="/images/favicon.ico" />
     </>
   );
