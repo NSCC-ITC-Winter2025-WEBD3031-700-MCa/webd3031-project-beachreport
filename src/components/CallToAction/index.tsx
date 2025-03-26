@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const CallToAction = () => {
   return (
-    <div className="bg-white grid grid-cols-1 lg:grid-cols-12 py-10 items-center">
+    <div className="bg-white grid grid-cols-1 lg:grid-cols-12 py-10 items-center z-0">
      {/* Button Section */}
       <div className="lg:col-span-3 lg:col-start-2 flex flex-col items-center text-2xl text-black">
         <Link
