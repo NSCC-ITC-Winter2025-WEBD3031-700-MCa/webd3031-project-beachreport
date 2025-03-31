@@ -1,13 +1,13 @@
 import NextAuth, { NextAuthOptions, Session, User as NextAuthUser } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 import { JWT } from "next-auth/jwt";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-// Initialize Prisma Client
 const prisma = new PrismaClient();
 
-// Extend NextAuth types (ensure this is at the top)
 declare module "next-auth" {
   interface User {
     id: string;
@@ -19,7 +19,9 @@ declare module "next-auth" {
   interface Session {
     user: User;
   }
+}
 
+declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     email: string;
@@ -28,12 +30,23 @@ declare module "next-auth" {
   }
 }
 
-// Define authentication options inline (do not export this)
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
+
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "select_account", // 🔁 Always show Google account picker
+        },
+      },
+    }),
+
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -45,7 +58,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing email or password");
         }
 
-        // Find the user by email using Prisma
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
@@ -54,46 +66,43 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid email or password");
         }
 
-        // Check password validity using bcrypt
         const isValidPassword = await bcrypt.compare(credentials.password, user.password);
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
 
-        // Return user object without sensitive data
-        return {
-          id: user.id,
-          email: user.email,
-          isAdmin: user.isAdmin,
-          isPaidSubscriber: user.isPaidSubscriber
-        };
+        const { id, email, isAdmin, isPaidSubscriber } = user;
+        return { id, email, isAdmin, isPaidSubscriber };
       },
     }),
   ],
+
   callbacks: {
     async jwt({ token, user }: { token: JWT; user?: NextAuthUser }) {
       if (user) {
-        return { ...token, id: user.id, email: user.email, isAdmin: user.isAdmin, isPaidSubscriber: user.isPaidSubscriber };
+        token.id = user.id;
+        token.email = user.email;
+        token.isAdmin = (user as any).isAdmin ?? false;
+        token.isPaidSubscriber = (user as any).isPaidSubscriber ?? false;
       }
       return token;
     },
 
     async session({ session, token }: { session: Session; token: JWT }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-          email: token.email,
-          isAdmin: token.isAdmin,
-          isPaidSubscriber: token.isPaidSubscriber,
-        },
-      };
+      session.user.id = token.id;
+      session.user.email = token.email;
+      session.user.isAdmin = token.isAdmin;
+      session.user.isPaidSubscriber = token.isPaidSubscriber;
+      return session;
     },
   },
-  pages: {},
+
+  pages: {
+    // signIn: "/login" // Optional: add custom login page
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Create the NextAuth handler and export only GET and POST
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
