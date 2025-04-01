@@ -1,5 +1,4 @@
 import About from "@/components/About";
-import Team from "@/components/Team";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +11,6 @@ const AboutPage = () => {
   return (
     <main>
       <About />
-      <Team />
     </main>
   );
 };
