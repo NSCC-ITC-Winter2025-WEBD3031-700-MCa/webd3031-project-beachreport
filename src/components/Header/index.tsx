@@ -32,30 +32,20 @@ const Header = () => {
   }, []);
 
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const navbarToggleHandler = () => {
-    setNavbarOpen(!navbarOpen);
-  };
+  const navbarToggleHandler = () => setNavbarOpen(!navbarOpen);
 
   const [sticky, setSticky] = useState(false);
   const handleStickyNavbar = () => {
-    if (window.scrollY >= 80) {
-      setSticky(true);
-    } else {
-      setSticky(false);
-    }
+    setSticky(window.scrollY >= 80);
   };
 
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
-  });
+  }, []);
 
   const [openIndex, setOpenIndex] = useState(-1);
-  const handleSubmenu = (index: any) => {
-    if (openIndex === index) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
+  const handleSubmenu = (index: number) => {
+    setOpenIndex(openIndex === index ? -1 : index);
   };
 
   const { theme, setTheme } = useTheme();
@@ -94,21 +84,16 @@ const Header = () => {
                   className="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                 >
                   <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${
-                    navbarOpen ? " top-[7px] rotate-45" : " "
-                  } ${pathUrl !== "/" && "!bg-dark dark:!bg-white"} ${
-                    pathUrl === "/" && sticky ? "bg-dark dark:bg-white" : "bg-white"
-                  }`} />
+                    navbarOpen ? " top-[7px] rotate-45" : ""
+                  } ${pathUrl !== "/" ? "!bg-dark dark:!bg-white" : sticky ? "bg-dark dark:bg-white" : "bg-white"}`} />
                   <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${
-                    navbarOpen ? "opacity-0 " : " "
-                  } ${pathUrl !== "/" && "!bg-dark dark:!bg-white"} ${
-                    pathUrl === "/" && sticky ? "bg-dark dark:bg-white" : "bg-white"
-                  }`} />
+                    navbarOpen ? "opacity-0" : ""
+                  } ${pathUrl !== "/" ? "!bg-dark dark:!bg-white" : sticky ? "bg-dark dark:bg-white" : "bg-white"}`} />
                   <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${
-                    navbarOpen ? " top-[-8px] -rotate-45" : " "
-                  } ${pathUrl !== "/" && "!bg-dark dark:!bg-white"} ${
-                    pathUrl === "/" && sticky ? "bg-dark dark:bg-white" : "bg-white"
-                  }`} />
+                    navbarOpen ? " top-[-8px] -rotate-45" : ""
+                  } ${pathUrl !== "/" ? "!bg-dark dark:!bg-white" : sticky ? "bg-dark dark:bg-white" : "bg-white"}`} />
                 </button>
+
                 <nav
                   id="navbarCollapse"
                   className={`navbar absolute right-0 z-30 w-[250px] rounded border-[.5px] border-body-color/50 bg-white px-6 py-4 duration-300 dark:border-body-color/20 dark:bg-dark-2 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 lg:dark:bg-transparent ${
@@ -168,7 +153,19 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
+
               <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
+                {session?.user?.isAdmin && (
+                  <Link
+                    onClick={navbarToggleHandler}
+                    scroll={false}
+                    href="/dashboard"
+                    className="ud-menu-scroll text-decoration-none flex py-2 text-amber-700 group-hover:text-amber-700 dark:text-amber-700 dark:group-hover:text-amber-700 lg:inline-flex lg:px-0 lg:py-6"
+                  >
+                    Dashboard
+                  </Link>
+                )}
+
                 {session?.user ? (
                   <>
                     <p className="loginBtn px-7 py-3 text-base font-medium text-amber-700">
