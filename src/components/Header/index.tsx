@@ -315,7 +315,7 @@ const Header = () => {
                         <Link
                           onClick={navbarToggleHandler}
                           scroll={false}
-                          href="/admin"
+                          href="/dashboard"
                           className={`ud-menu-scroll text-decoration-none flex py-2 text-amber-700 group-hover:text-amber-700 dark:text-amber-700 dark:group-hover:text-amber-700 lg:inline-flex lg:px-0 lg:py-6 ${
                             pathUrl === "/#" && "text-cyan-500"
                           }`}

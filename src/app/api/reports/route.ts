@@ -29,3 +29,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
+export async function GET() {
+  try {
+    const reports = await prisma.report.findMany({
+      include: { 
+        beach: true, 
+        user: true
+      },
+      orderBy: { createdAt: "desc" },
+      take: 10,
+    });
+    return NextResponse.json({ reports });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
+  }
+}
