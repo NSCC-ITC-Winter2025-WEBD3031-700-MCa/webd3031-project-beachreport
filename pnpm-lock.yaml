@@ -11,15 +11,12 @@ importers:
       '@auth/prisma-adapter':
         specifier: ^1.5.0
         version: 1.6.0(@prisma/client@5.22.0(prisma@5.22.0))(nodemailer@6.10.0)
-
       '@heroicons/react':
         specifier: ^2.2.0
         version: 2.2.0(react@19.0.0)
-
       '@next-auth/prisma-adapter':
         specifier: ^1.0.7
         version: 1.0.7(@prisma/client@5.22.0(prisma@5.22.0))(next-auth@4.24.11(next@15.2.4(@babel/core@7.26.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(nodemailer@6.10.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
-
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
