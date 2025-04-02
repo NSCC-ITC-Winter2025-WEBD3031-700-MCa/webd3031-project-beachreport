@@ -99,7 +99,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <Link
-                    href="#"
+                    href="/signup"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     JOIN TODAY
@@ -107,7 +107,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/about"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     About
@@ -115,7 +115,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     Beaches
@@ -166,7 +166,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <Link
-                    href="#"
+                    href="/about"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     FAQ
@@ -174,7 +174,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/pricing"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     Pricing
@@ -182,7 +182,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     Find your beach
