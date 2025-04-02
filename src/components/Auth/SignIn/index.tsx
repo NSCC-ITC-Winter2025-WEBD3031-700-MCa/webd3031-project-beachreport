@@ -37,11 +37,11 @@ const Signin = () => {
   };
 
   return (
-    <section className="bg-white py-14 lg:py-20">
+    <section className="bg-[#FCF6E1] py-14 lg:py-24">
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-[#70A09B] px-8 py-14 text-center sm:px-12 md:px-[60px] shadow-md">
+            <div className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-8 py-14 text-center sm:px-12 md:px-[60px] shadow-md">
               <div className="mb-10 text-center">
                 <Link href="/" className="mx-auto inline-block max-w-[160px]">
                   <Image
@@ -58,7 +58,7 @@ const Signin = () => {
 
               <span className="relative my-8 block text-center">
                 <span className="absolute left-0 top-1/2 block h-px w-full bg-gray-300"></span>
-                <span className="relative z-10 inline-block bg-[#70A09B] px-3 text-base text-[#053c5e]">
+                <span className="relative z-10 inline-block bg-white px-3 text-base text-black">
                   OR
                 </span>
               </span>
@@ -90,7 +90,7 @@ const Signin = () => {
                 <div className="mb-9">
                   <button
                     type="submit"
-                    className="flex w-full cursor-pointer items-center justify-center rounded-md border border-[#e46926] bg-[#e46926] px-5 py-3 text-base text-white transition hover:bg-[#d15b20]"
+                    className="flex w-full cursor-pointer items-center justify-center rounded-md border border-cyan-500 bg-cyan-500 px-5 py-3 text-base text-white transition hover:bg-cyan-600"
                   >
                     Sign In {loading && <Loader />}
                   </button>
@@ -99,12 +99,12 @@ const Signin = () => {
 
               <Link
                 href="/forgot-password"
-                className="mb-2 inline-block text-base text-white hover:text-[#e46926]"
+                className="mb-2 inline-block text-base text-black hover:text-[#e46926]"
               >
                 Forgot Password?
               </Link>
 
-              <p className="text-base text-white">
+              <p className="text-base text-black">
                 Not a member yet?{" "}
                 <Link href="/signup" className="text-[#e46926] hover:underline">
                   Sign Up
