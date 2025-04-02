@@ -37,11 +37,11 @@ const SignUp = () => {
   };
 
   return (
-    <section className="bg-white py-14 lg:py-[90px]">
+    <section className="bg-[#FCF6E1] py-14 lg:py-[90px]">
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-xl bg-[#689f9e] px-8 py-14 text-center shadow-md sm:px-12 md:px-[60px]">
+            <div className="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-xl bg-white px-8 py-14 text-center shadow-md sm:px-12 md:px-[60px]">
               {/* Logo */}
               <div className="mb-10 text-center">
                 <Link href="/" className="mx-auto inline-block max-w-[160px]">
@@ -59,7 +59,7 @@ const SignUp = () => {
 
               <span className="relative my-8 block text-center">
                 <span className="absolute left-0 top-1/2 block h-px w-full bg-gray-300"></span>
-                <span className="relative z-10 inline-block bg-[#689f9e] px-3 text-base text-[#053c5e]">
+                <span className="relative z-10 inline-block bg-white px-3 text-base text-black">
                   OR
                 </span>
               </span>
@@ -72,7 +72,7 @@ const SignUp = () => {
                     placeholder="Name"
                     name="name"
                     required
-                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-white outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
+                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-black outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
                   />
                 </div>
                 <div className="mb-[22px]">
@@ -81,7 +81,7 @@ const SignUp = () => {
                     placeholder="Email"
                     name="email"
                     required
-                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-white outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
+                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-black outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
                   />
                 </div>
                 <div className="mb-[22px]">
@@ -90,34 +90,34 @@ const SignUp = () => {
                     placeholder="Password"
                     name="password"
                     required
-                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-white outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
+                    className="w-full rounded-md border border-gray-300 bg-transparent px-5 py-3 text-base text-black outline-none transition placeholder:text-gray-200 focus:border-[#e46926]"
                   />
                 </div>
                 <div className="mb-9">
                   <button
                     type="submit"
-                    className="flex w-full cursor-pointer items-center justify-center rounded-md border border-[#e46926] bg-[#e46926] px-5 py-3 text-base text-white transition hover:bg-[#d15b20]"
+                    className="flex w-full cursor-pointer items-center justify-center rounded-md border border-cyan-500 bg-cyan-500 px-5 py-3 text-base text-white transition hover:bg-cyan-600"
                   >
                     Sign Up {loading && <Loader />}
                   </button>
                 </div>
               </form>
 
-              <p className="mb-4 text-base text-white">
+              <p className="mb-4 text-base text-black">
                 By creating an account you agree to our{" "}
-                <Link href="/#" className="text-[#e46926] hover:underline">
+                <Link href="/#" className="text-amber-700 hover:underline">
                   Privacy
                 </Link>{" "}
                 and{" "}
-                <Link href="/#" className="text-[#e46926] hover:underline">
+                <Link href="/#" className="text-amber-700 hover:underline">
                   Policy
                 </Link>
                 .
               </p>
 
-              <p className="text-base text-white">
+              <p className="text-base text-black">
                 Already have an account?{" "}
-                <Link href="/signin" className="text-[#e46926] hover:underline">
+                <Link href="/signin" className="text-amber-700 hover:underline">
                   Sign In
                 </Link>
               </p>
