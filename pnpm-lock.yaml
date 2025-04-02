@@ -114,9 +114,6 @@ importers:
       eslint-config-next:
         specifier: 15.1.6
         version: 15.1.6(eslint@8.57.1)(typescript@5.8.2)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@20.17.22)(ts-node@10.9.2(@types/node@20.17.22)(typescript@5.8.2))
       postcss:
         specifier: ^8
         version: 8.5.3

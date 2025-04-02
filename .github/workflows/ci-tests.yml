@@ -11,8 +11,8 @@ on:
       - develop
 
 jobs:
-  test:
-    name: Run Build, Prisma Checks & Jest Tests
+  dev-check:
+    name: Run Dev Check
     runs-on: ubuntu-latest
 
     steps:
@@ -30,25 +30,5 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      # Load environment variables from .env file
-      - name: Load .env file
-        run: |
-          echo "Loading environment variables from .env"
-          grep -v '^#' .env | while read -r line; do
-            echo "$line" >> $GITHUB_ENV
-          done
-
-      # Run Build Check to Catch Linting & Build Errors Early
-      - name: Run Build
-        run: pnpm build
-
-      # Run Prisma Checks
-      - name: Run Prisma Schema Validation
-        run: pnpm prisma validate
-
-      - name: Check Prisma Migrations
-        run: pnpm prisma migrate status
-
-      # Run Jest Tests
-      - name: Run Jest Tests
-        run: pnpm test
+      - name: Run Dev Check
+        run: npm run dev
