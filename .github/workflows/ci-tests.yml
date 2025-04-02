@@ -1,44 +1,54 @@
-# name: CI Tests
+name: CI Tests
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - develop
-#   pull_request:
-#     branches:
-#       - main
-#       - develop
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
 
-# jobs:
-#   test:
-#     name: Run Prisma Checks & Jest Tests
-#     runs-on: ubuntu-latest
+jobs:
+  test:
+    name: Run Build, Prisma Checks & Jest Tests
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 18
-#           cache: 'pnpm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-#       - name: Install Dependencies
-#         run: pnpm install
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-#       # Run Prisma Checks
-#       - name: Run Prisma Schema Validation
-#         run: pnpm prisma validate
+      - name: Install Dependencies
+        run: pnpm install
 
-#       - name: Check Prisma Migrations
-#         run: pnpm prisma migrate status
+      # Load environment variables from .env file
+      - name: Load .env file
+        run: |
+          echo "Loading environment variables from .env"
+          grep -v '^#' .env | while read -r line; do
+            echo "$line" >> $GITHUB_ENV
+          done
 
-#       # Set up test database (SQLite for local tests)
-#       - name: Set TEST_DATABASE_URL for Jest
-#         run: echo "DATABASE_URL=file:./test.db" >> $GITHUB_ENV
+      # Run Build Check to Catch Linting & Build Errors Early
+      - name: Run Build
+        run: pnpm build
 
-#       #  Run Jest Tests
-#       - name: Run Jest Tests
-#         run: pnpm test
+      # Run Prisma Checks
+      - name: Run Prisma Schema Validation
+        run: pnpm prisma validate
+
+      - name: Check Prisma Migrations
+        run: pnpm prisma migrate status
+
+      # Run Jest Tests
+      - name: Run Jest Tests
+        run: pnpm test
