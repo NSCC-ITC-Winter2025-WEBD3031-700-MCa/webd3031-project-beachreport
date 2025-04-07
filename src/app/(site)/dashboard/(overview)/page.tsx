@@ -1,10 +1,21 @@
 import { Suspense } from 'react';
+import { authOptions } from "@/utils/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
 import { UsersChartSkeleton, LatestReportsSkeleton, CardsSkeleton, } from '@/app/ui/skeletons';
 import LatestReports from '@/app/ui/dashboard/latest-reports';
 import UsersChart from '@/app/ui/dashboard/users-chart';
 import CardWrapper from '@/app/ui/dashboard/cards';
  
 export default async function Page() {
+
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user || !session.user.isAdmin) {
+    return redirect("/signin"); 
+  }
+
     return (
       <div className="bg-gray-200 max-w-4xl mx-auto my-20 p-6">
         <h1 className="mb-4 font-bold text-center text-xl md:text-2xl">
