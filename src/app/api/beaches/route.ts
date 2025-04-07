@@ -12,6 +12,8 @@ export async function GET() {
         name: true,
         id: true,
         location: true,
+        latitude: true,
+        longitude: true,
         // Include any other fields you need
       },
     });

@@ -115,7 +115,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link
-                    href="/"
+                    href="/map"
                     className="mb-3 inline-block text-base text-gray-7 hover:text-[#d5831f]"
                   >
                     Beaches

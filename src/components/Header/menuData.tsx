@@ -22,7 +22,7 @@ const menuData: Menu[] = [
   {
     id: 5,
     title: "Beach Map",
-    path: "/contact",
+    path: "/map",
     newTab: false,
   },
   {
