@@ -52,6 +52,8 @@ model Beach {
   location    String?
   description String?
   imageUrl    String?
+  latitude    Float?
+  longitude   Float?
   reports     Report[] // One-to-Many relationship
 }
 
