@@ -107,6 +107,19 @@ const Header = () => {
                     navbarOpen ? "visibility top-full opacity-100" : "invisible top-[120%] opacity-0"
                   }`}
                 >
+                   {/* ─── Mobile: User name at top ─── */}
+                  <div className="block lg:hidden mb-4 border-b border-body-color/50 pb-4">
+                    {session?.user ? (
+                      <p className="text-amber-700 text-lg font-medium">
+                        {session.user.name}
+                      </p>
+                    ) : (
+                      <p className="text-amber-700 text-lg font-medium">
+                        Welcome!
+                      </p>
+                    )}
+                  </div>
+
                   <ul className="block lg:ml-8 lg:flex lg:gap-x-8 xl:ml-14 xl:gap-x-12">
                     {menuData.map((menuItem, index) =>
                       menuItem.path ? (
@@ -157,21 +170,53 @@ const Header = () => {
                         </li>
                       )
                     )}
+                    {session?.user?.isAdmin && (
+                      <li className="group relative">
+                        <Link
+                          scroll={false}
+                          href="/dashboard"
+                          onClick={navbarToggleHandler}
+                          className={`ud-menu-scroll flex py-2 text-amber-700 group-hover:text-amber-700 dark:text-amber-700 dark:group-hover:text-amber-700 lg:inline-flex lg:px-0 lg:py-6 ${
+                            pathUrl === "/dashboard" && "text-cyan-500"
+                          }`}
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                    )}
                   </ul>
+                   {/* ─── Mobile: Auth buttons at bottom ─── */}
+                  <div className="block lg:hidden mt-4">
+                    {session?.user ? (
+                      <button
+                        onClick={() => { navbarToggleHandler(); signOut(); }}
+                        className="w-full rounded-lg bg-cyan-500 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-80"
+                      >
+                        Sign Out
+                      </button>
+                    ) : (
+                      <div className="flex flex-col gap-2">
+                        <Link
+                          href="/signin"
+                          onClick={navbarToggleHandler}
+                          className="w-full text-center px-7 py-3 text-base font-medium text-amber-700 hover:text-amber-800"
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/signup"
+                          onClick={navbarToggleHandler}
+                          className="w-full rounded-lg bg-amber-700 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-amber-800"
+                        >
+                          Sign Up
+                        </Link>
+                      </div>
+                    )}
+                  </div>
                 </nav>
               </div>
 
-              <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
-                {session?.user?.isAdmin && (
-                  <Link
-                    onClick={navbarToggleHandler}
-                    scroll={false}
-                    href="/dashboard"
-                    className="ud-menu-scroll text-decoration-none flex py-2 text-amber-700 group-hover:text-amber-700 dark:text-amber-700 dark:group-hover:text-amber-700 lg:inline-flex lg:px-0 lg:py-6"
-                  >
-                    Dashboard
-                  </Link>
-                )}
+              <div className="hidden items-center justify-end pr-16 lg:flex lg:pr-0">
 
                 {session?.user ? (
                   <>
