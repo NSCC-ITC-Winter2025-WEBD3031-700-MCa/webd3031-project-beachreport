@@ -1,23 +1,33 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "next-auth/next"; // Import getServerSession
+import { authOptions } from "../../../utils/auth";
 
 const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
+    // Get the session from the request
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Extract the authenticated user ID from the session
+    const userId = session.user.id;
+
     const { slug, reportText, rating } = await req.json();
 
     // Find the beach ID using the slug
     const beach = await prisma.beach.findUnique({ where: { slug } });
-    if (!beach) return NextResponse.json({ error: "Beach not found" }, { status: 404 });
-
-    // TODO: Replace with actual user ID from authentication session
-    const userId = "cm8g18ljp00018skayu0e4gs3"; // Temporary placeholder (John Doe's id number)
+    if (!beach) {
+      return NextResponse.json({ error: "Beach not found" }, { status: 404 });
+    }
 
     const report = await prisma.report.create({
       data: {
         beachId: beach.id,
-        userId,
+        userId, // Use the actual user id from the session
         reportText,
         rating,
       },
