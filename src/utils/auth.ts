@@ -14,6 +14,7 @@ declare module "next-auth" {
     email: string;
     isAdmin: boolean;
     isPaidSubscriber: boolean;
+    name: string;
   }
 
   interface Session {
@@ -27,6 +28,7 @@ declare module "next-auth/jwt" {
     email: string;
     isAdmin: boolean;
     isPaidSubscriber: boolean;
+    name: string;
   }
 }
 
@@ -73,28 +75,32 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid password");
         }
 
-        const { id, email, isAdmin, isPaidSubscriber } = user;
-        return { id, email, isAdmin, isPaidSubscriber };
+        const { id, email, isAdmin, isPaidSubscriber, name} = user;
+        return { id, email, isAdmin, isPaidSubscriber, name };
       },
     }),
   ],
 
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: NextAuthUser }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
         token.isAdmin = (user as any).isAdmin ?? false;
         token.isPaidSubscriber = (user as any).isPaidSubscriber ?? false;
+        // Propagate the name from the user to the token:
+        token.name = user.name;
       }
       return token;
     },
-
-    async session({ session, token }: { session: Session; token: JWT }) {
+  
+    async session({ session, token }) {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.isAdmin = token.isAdmin;
       session.user.isPaidSubscriber = token.isPaidSubscriber;
+      // Include the name field in the session user:
+      session.user.name = token.name;
       return session;
     },
   },
