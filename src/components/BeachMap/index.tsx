@@ -19,6 +19,8 @@ type Beach = {
   name: string;
   latitude: number;
   longitude: number;
+  slug: string;
+  location: string;
 };
 
 const BeachMap = () => {
@@ -50,7 +52,14 @@ const BeachMap = () => {
               position={[beach.latitude, beach.longitude]}
               icon={customIcon}
             >
-              <Popup>{beach.name}</Popup>
+              <Popup>
+                <a href={`/beaches/${beach.slug}`} className="text-cyan-500 text-xl underline">
+                  {beach.name}
+                </a>
+                <p>{beach.location}</p>
+
+              </Popup>
+
             </Marker>
           ))}
         </MapContainer>
