@@ -23,7 +23,7 @@ const Signin = () => {
     const response = await signIn("credentials", {
       email: loginData.email,
       password: loginData.password,
-      redirect: false,
+      callbackUrl: "/",
     });
 
     if (response?.error) {
@@ -32,7 +32,6 @@ const Signin = () => {
       setLoading(false);
     } else {
       toast.success("Login successful");
-      router.push("/");
     }
   };
 
